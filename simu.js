@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	var qest = 2;
+	var qest = 3;
 	var bpos = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, 5*Math.PI/4, 6*Math.PI/4, 7*Math.PI/4];
 	var ctx = document.querySelector('canvas').getContext('2d');
 	var tipo = localStorage.getItem("tipoMaquina");
@@ -39,31 +39,39 @@ $(document).ready(function(){
 		est[0] = randomCircle(ctx,'#a80000', mX(bpos[0]), mY(bpos[0]),40);
 		atu = 0;
 	}
-	alert("ok");
-	if(qest == 4 | qest == 6 | qest == 7 | qest == 8)
-		if(qest == 8)
+	if(qest == 4 | qest == 6 | qest == 7 | qest == 8){
+		if(qest == 8){
 			est[1] = randomCircle(ctx,'#999', mX(bpos[1]), mY(bpos[1]),40);
+		}
 		else{
 			est[1] = randomCircle(ctx,'#a80000', mX(bpos[1]), mY(bpos[1]),40);
 			atu = 1;
 		}
-	if(qest == 2 | qest == 5 | qest == 6 | qest == 7 | qest == 8)
+	}
+	if(qest == 2 | qest == 5 | qest == 6 | qest == 7 | qest == 8){
 		if(qest == 2){
 			est[2] = randomCircle(ctx,'#a80000', mX(bpos[2]), mY(bpos[2]),40);
 			atu = 2;
 		}
-		else
+		else{
 			est[2] = randomCircle(ctx,'#999', mX(bpos[2]), mY(bpos[2]),40);
-	if(qest == 3 | qest == 4 | qest == 6 | qest == 7 | qest == 8)
+		}
+	}
+	if(qest == 3 | qest == 4 | qest == 6 | qest == 7 | qest == 8){
 		est[3] = randomCircle(ctx,'#999', mX(bpos[3]), mY(bpos[3]),40);
-	if(qest == 5 | qest == 7 | qest == 8)
+	}
+	if(qest == 5 | qest == 7 | qest == 8){
 		est[4] = randomCircle(ctx,'#999', mX(bpos[4]), mY(bpos[4]),40);
-	if(qest == 3 | qest == 4 | qest == 6 | qest == 7 | qest == 8)
+	}
+	if(qest == 3 | qest == 4 | qest == 6 | qest == 7 | qest == 8){
 		est[5] = randomCircle(ctx,'#999', mX(bpos[5]), mY(bpos[5]),40);
+	}
 	if(qest == 2 | qest == 5 | qest == 6 | qest == 7 | qest == 8){
 		est[6] = randomCircle(ctx,'#999', mX(bpos[6]), mY(bpos[6]),40);
+	}
 	if(qest == 4 | qest == 5 | qest == 6 | qest == 7 | qest == 8){
 		est[7] = randomCircle(ctx,'#999', mX(bpos[7]), mY(bpos[7]),40);
+	}
 
 	ctx.fillStyle = ctx.strokeStyle = '#5ba4ba';
 
@@ -249,10 +257,11 @@ $(document).ready(function(){
 	function arrows(){
 		for(i = 0; i < proc.length; i += 4){
 			if(proc[i] == proc[i+2]){
-				var a = randomCircle(ctx,'#fff',mXre(proc[i],0),mYre(proc[i],0),1);
-				var b = randomCircle(ctx,'#fff',mXre(proc[i],1),mYre(proc[i],1),1);
+				var a = randomCircle(ctx,'#5ba4ba',mXre(proc[i],0),mYre(proc[i],0),2);
+				var b = randomCircle(ctx,'#5ba4ba',mXre(proc[i],1),mYre(proc[i],1),2);
 				arrow(ctx,a,est[proc[i]],10,0);
 				arrow(ctx,b,a,10,0);
+				arrow(ctx,a,b,10,0);
 				arrow(ctx,b,est[proc[i]],10,1);
 			}
 			else
@@ -262,17 +271,26 @@ $(document).ready(function(){
 
 	ctx.fillStyle = ctx.strokeStyle = '#000';
 
-	$("#bt0").click(function() {
-		alert("0");/*
-		for(i = 0; i < proc.length; i += 4){
-			if(nproc[i] == atu)
-		}*/
+	$("#bt0").click(function(){
 		randomCircle(ctx,'#999', mX(bpos[atu]), mY(bpos[atu]),40);
+		for(i = 0; i < proc.length; i += 4){
+			if(proc[i] == atu && proc[i+1] == 0){
+				atu = proc[i+2];
+			}
+		}
+		randomCircle(ctx,'#a80000', mX(bpos[atu]), mY(bpos[atu]),40);
+		write();
 	});
 
-	$("#bt1").click(function() {
-		alert("1");
+	$("#bt1").click(function(){
 		randomCircle(ctx,'#999', mX(bpos[atu]), mY(bpos[atu]),40);
+		for(i = 0; i < proc.length; i += 4){
+			if(proc[i] == atu && proc[i+1] == 1){
+				atu = proc[i+2];
+			}
+		}
+		randomCircle(ctx,'#a80000', mX(bpos[atu]), mY(bpos[atu]),40);
+		write();
 	});
 
 	//window.location.reload(true);
