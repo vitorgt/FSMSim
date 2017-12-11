@@ -1,15 +1,19 @@
 $(document).ready(function(){
 
-	var qest = 3;
+	var qest = 8;
 	var bpos = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, 5*Math.PI/4, 6*Math.PI/4, 7*Math.PI/4];
 	var ctx = document.querySelector('canvas').getContext('2d');
 	var tipo = localStorage.getItem("tipoMaquina");
 	var qtdEst = localStorage.getItem("qtdEst");
 	var vetorTop = localStorage.getItem("vetTop");
-	var dumb = [-1,-1,-1,-1,-1,-1,-1,-1];
+	var dumb = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
+	var dumb2 = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
 	var est = [0,0,0,0,0,0,0,0];
-	//var proc = [1,1,2,1, 2,0,3,1, 3,1,2,1, 1,0,1,1, 3,0,3,1, 3,0,1,1];
-	var proc = [1,1,2,0, 2,0,1,1, 2,1,2,0, 1,0,1,1];
+	var exl = [0,0,0,0,0,0,0,0];
+	var inl = [0,0,0,0,0,0,0,0];
+	//var proc = [1,1,2,1, 2,0,3,1, 2,1,2,1, 3,1,2,1, 7,0,3,1, 3,0,7,1, 5,0,1,1, 1,0,5,1];
+	//var proc = [1,1,2,0, 2,0,1,1, 2,1,2,0, 1,0,1,1];
+	var proc = [1,0,1,0, 1,0,2,0, 1,0,3,0, 1,0,4,0, 1,0,5,0, 1,0,6,0, 1,0,7,0, 1,0,8,0, 2,0,1,0, 2,0,2,0, 2,0,3,0, 2,0,4,0, 2,0,5,0, 2,0,6,0, 2,0,7,0, 2,0,8,0, 3,0,1,0, 3,0,2,0, 3,0,3,0, 3,0,4,0, 3,0,5,0, 3,0,6,0, 3,0,7,0, 3,0,8,0, 4,0,1,0, 4,0,2,0, 4,0,3,0, 4,0,4,0, 4,0,5,0, 4,0,6,0, 4,0,7,0, 4,0,8,0, 5,0,1,0, 5,0,2,0, 5,0,3,0, 5,0,4,0, 5,0,5,0, 5,0,6,0, 5,0,7,0, 5,0,8,0, 6,0,1,0, 6,0,2,0, 6,0,3,0, 6,0,4,0, 6,0,5,0, 6,0,6,0, 6,0,7,0, 6,0,8,0, 7,0,1,0, 7,0,2,0, 7,0,3,0, 7,0,4,0, 7,0,5,0, 7,0,6,0, 7,0,7,0, 7,0,8,0, 8,0,1,0, 8,0,2,0, 8,0,3,0, 8,0,4,0, 8,0,5,0, 8,0,6,0, 8,0,7,0, 8,0,8,0];
 	var nproc = proc.slice(0);
 	var atu;
 	var i;
@@ -21,19 +25,30 @@ $(document).ready(function(){
 	ctx.font = "20px Arial";
 	ctx.lineWidth = 2;
 
+/*
 	if(qest == 1){
 		alert("Operação Inválida");
 		window.stop();
 	}
 	for(i = 0; i < nproc.length; i += 4){
-		if(dumb[nproc[i+2]] == -1)
+		dumb2[nproc[i]]++;
+		if(dumb2[nproc[i]] > 1){
+			alert("Operação Inválida\nDois caminhos possiveis com a mesma entrada");
+			window.stop();
+			break;
+		}
+		if(dumb[nproc[i+2]] == -1){
 			dumb[nproc[i+2]] = nproc[i+3];
-		else
+		}
+		else{
 			if(dumb[nproc[i+2]] != nproc[i+3]){
 				alert("Operação Inválida\nUm estado com duas saidas diferentes em Tipo Moore");
 				window.stop();
+				break;
 			}
+		}
 	}
+*/
 
 	if(qest == 3 | qest == 5 | qest == 8){
 		est[0] = randomCircle(ctx,'#a80000', mX(bpos[0]), mY(bpos[0]),40);
@@ -84,14 +99,6 @@ $(document).ready(function(){
 		}
 		write();
 		arrows();
-		est[6].y -= 10;
-		est[2].y -= 10;
-		//arrow(ctx,est[2],est[6],10,1);
-		est[6].y += 20;
-		est[2].y += 20;
-		//arrow(ctx,est[6],est[2],10,1);
-		est[6].y -= 10;
-		est[2].y -= 10;
 	}
 	if(qest == 3){
 		for(i = 0; i < proc.length; i += 2){
@@ -113,7 +120,21 @@ $(document).ready(function(){
 		arrows();
 	}
 
-	function arrow(ctx,p1,p2,size,aw){
+	function correct(p1, p2){
+		var x = p1.x, y = p1.y, x2 = p2.x, y2 = p2.y;
+		//alert("("+x+","+y+") ("+x2+","+y2+")");
+		//x += Math.round((Math.random()-.5)*40);
+		//y += Math.round((Math.random()-.5)*40);
+		return {x:x,y:y};
+	}
+
+	function arrow(ctx,p3,p4,size,aw,ran){
+		var p1 = p3;
+		var p2 = p4;
+		if(ran){
+			p1 = correct(p3, p4);
+			p2 = correct(p4, p3);
+		}
 		ctx.save();
 		var points = edges(ctx,p1,p2);
 		if (points.length < 2) return 
@@ -259,38 +280,64 @@ $(document).ready(function(){
 			if(proc[i] == proc[i+2]){
 				var a = randomCircle(ctx,'#5ba4ba',mXre(proc[i],0),mYre(proc[i],0),2);
 				var b = randomCircle(ctx,'#5ba4ba',mXre(proc[i],1),mYre(proc[i],1),2);
-				arrow(ctx,a,est[proc[i]],10,0);
-				arrow(ctx,b,a,10,0);
-				arrow(ctx,a,b,10,0);
-				arrow(ctx,b,est[proc[i]],10,1);
+				arrow(ctx,a,est[proc[i]],10,0,0);
+				arrow(ctx,b,a,10,0,0);
+				arrow(ctx,a,b,10,0,0);
+				arrow(ctx,b,est[proc[i]],10,1,0);
 			}
 			else
-				arrow(ctx,est[proc[i]],est[proc[i+2]],10,1);
+				arrow(ctx,est[proc[i]],est[proc[i+2]],10,1,1);
 		}
 	}
 
 	ctx.fillStyle = ctx.strokeStyle = '#000';
 
+	function intern(x1, y1){
+		alert(x1+" "+y1);
+		var x = Math.round(x1), y = Math.round(y1);
+		return {x:x,y:y};
+	}
+
+	function extern(x1, y1){
+		alert(x1+" "+y1);
+		var x = Math.round(x1), y = Math.round(y1);
+		return {x:x,y:y};
+	}
+
 	$("#bt0").click(function(){
+		var achou = 0;
 		randomCircle(ctx,'#999', mX(bpos[atu]), mY(bpos[atu]),40);
 		for(i = 0; i < proc.length; i += 4){
+			//alert(proc+"\nproc["+i+"] == "+proc[i]+" | in == "+proc[i+1]+" | atu == "+atu+" | proxx == "+proc[i+2]);
 			if(proc[i] == atu && proc[i+1] == 0){
 				atu = proc[i+2];
+				achou = 1;
+				break;
 			}
 		}
 		randomCircle(ctx,'#a80000', mX(bpos[atu]), mY(bpos[atu]),40);
 		write();
+		if(!achou){
+			alert("Não há destino com a entrada 0 no estado atual");
+		}
 	});
 
 	$("#bt1").click(function(){
+		var achou = 0;
 		randomCircle(ctx,'#999', mX(bpos[atu]), mY(bpos[atu]),40);
 		for(i = 0; i < proc.length; i += 4){
+			//alert(proc+"\nproc["+i+"] == "+proc[i]+" | in == "+proc[i+1]+" | atu == "+atu+" | proxx == "+proc[i+2]);
 			if(proc[i] == atu && proc[i+1] == 1){
 				atu = proc[i+2];
+				achou = 1;
+				break;
 			}
 		}
 		randomCircle(ctx,'#a80000', mX(bpos[atu]), mY(bpos[atu]),40);
 		write();
+		if(!achou){
+			alert("Não há destino com a entrada 1 no estado atual");
+		}
 	});
 
 	//window.location.reload(true);
