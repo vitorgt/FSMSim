@@ -1,4 +1,4 @@
-//695min+51
+//695min+51+11
 /*
 (472,303)	(714,061)
 (542,131)	(542,131)
@@ -39,7 +39,6 @@ $(document).ready(function(){
 	ctx.font = "20px Arial";
 	ctx.lineWidth = 2;
 
-/*
 	if(qest == 1){
 		alert("Operação Inválida");
 		window.stop();
@@ -49,7 +48,7 @@ $(document).ready(function(){
 		if(dumb2[nproc[i]] > 1){
 			alert("Operação Inválida\nDois caminhos possiveis com a mesma entrada");
 			window.stop();
-			break;
+			//break;
 		}
 		if(dumb[nproc[i+2]] == -1){
 			dumb[nproc[i+2]] = nproc[i+3];
@@ -58,11 +57,11 @@ $(document).ready(function(){
 			if(dumb[nproc[i+2]] != nproc[i+3]){
 				alert("Operação Inválida\nUm estado com duas saidas diferentes em Tipo Moore");
 				window.stop();
-				break;
+				//break;
 			}
 		}
 	}
-*/
+	alert(dumb2);
 
 	if(qest == 3 | qest == 5 | qest == 8){
 		est[0] = randomCircle(ctx,'#a80000', mX(bpos[0]), mY(bpos[0]),40);
@@ -137,9 +136,11 @@ $(document).ready(function(){
 	function correct(x,y,x2,y2,f){
 		//alert("("+x+","+y+") ("+x2+","+y2+")");
 		if(x < 500){
-			if(y2 < 200 && x2 < 600){//7 6
-				if(f){ x -= 30; }
-				if(!f){ x -= 15; }
+			if(y2 < 200){
+				if(x2 < 600){//7 6
+					if(f){ x -= 30; }
+					if(!f){ x -= 15; }
+				}
 			}
 			else if(x2 > 900){//6 3
 				if(f){ y -= 5; }
@@ -158,8 +159,8 @@ $(document).ready(function(){
 				if(!f){ y -= 5; }
 			}
 		}
-		//x += Math.round((Math.random()-.5)*40);
-		//y += Math.round((Math.random()-.5)*40);
+		x += Math.round((Math.random()-.5)*40);
+		y += Math.round((Math.random()-.5)*40);
 		return {x:x,y:y};
 	}
 
@@ -375,6 +376,6 @@ $(document).ready(function(){
 		}
 	});
 
-	window.location.reload(true);
+	//window.location.reload(true);
 
 });
