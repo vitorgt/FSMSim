@@ -1,6 +1,6 @@
- $(document).ready(function(){
+$(document).ready(function(){
 
-	$( ".btn" ).click(function() {
+	$( ".btn" ).click(function(){
 		
 		var tipoEstado = parseInt($("input[name='tipo']:checked").val());
 		var qtdEstados = parseInt($("option:selected").val());
@@ -14,25 +14,15 @@
 		
 		var tabela = $("textarea[name='tabelaVerdade']").val();
 		var vetorTop = tabela.replace( /\n/g, " " ).split(" ");
-		
-		/*
-		
-		alert(tabela + " " + vetorTop.length);
-		var i;
-		for(i=0;i<vetorTop.length;i++){
-				if(i%4 == 0) {
-					alert("COM");
-				}
-				alert(vetorTop[i]);
+		for(var i = 0; i < vetorTop.length; i++){
+			vetorTop[i] = parseInt(vetorTop[i], 10);
 		}
-		* 
-		*/
 		
 		 localStorage.setItem("tipoMaquina",tipoEstado);
 		 localStorage.setItem("qtdEst",qtdEstados);
 		 localStorage.setItem("vetTop",vetorTop);
 		 
-		 window.open("teste.html");
+		 window.open("simulacao.html");
 	});
 
 });
