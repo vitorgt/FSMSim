@@ -1,4 +1,4 @@
-//997min == 16.6h
+//1080min == 18h
 $(document).ready(function(){
 
 		var bpos = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, 5*Math.PI/4, 6*Math.PI/4, 7*Math.PI/4];
@@ -20,6 +20,10 @@ $(document).ready(function(){
 		var qest = parseInt(qtdEst);
 		var nproc = proc.slice(0);
 		var atu;
+		var RelaEs = new Array(2000);
+		var RelaIn = new Array(2000);
+		var RelaOu = new Array(2000);
+		var cEs = 0, cIn = 0, cOu = 0;
 		var i, j;
 
 		h2can = 605 - 0.2*605;
@@ -374,6 +378,42 @@ $(document).ready(function(){
 			}
 		}
 
+		function output(i,prime){
+			ctx.beginPath();
+			ctx.rect(1100,70,300,800);
+			ctx.fillStyle  = '#fff';
+			ctx.fill();
+			ctx.fillStyle  = '#000';
+			ctx.font = "20px Arial";
+			if(!prime){
+				ctx.fillText("Estado anterior: "+nproc[i],1150,100);
+				ctx.fillText("Estado atual: "+nproc[i+2],1150,130);
+				ctx.fillText("Saida: "+nproc[i+3],1150,160);
+				RelaEs[cEs++] = nproc[i+2];
+				RelaIn[cIn++] = nproc[i+1];
+				RelaOu[cOu++] = nproc[i+3];
+			}
+			else{
+				ctx.fillText("Estado anterior: ",1150,100);
+				ctx.fillText("Estado atual: 1",1150,130);
+				RelaEs[cEs++] = 1;
+				if(tipo == 1){
+					for(i = 0; i < nproc.length; i += 4){
+						if(nproc[i+2] == 1){
+							ctx.fillText("Saida: "+nproc[i+3],1150,160);
+							RelaOu[cOu++] = nproc[i+3];
+							break;
+						}
+					}
+				}
+				else{
+					ctx.fillText("Saida: ",1150,160);
+				}
+			}
+			ctx.font = "20px Arial";
+			ctx.fillStyle  = '#5ba4ba';
+		}
+
 		function arrows(){
 			for(i = 0; i < proc.length; i += 4){
 				if(proc[i] == proc[i+2]){
@@ -390,6 +430,12 @@ $(document).ready(function(){
 		}
 
 		ctx.fillStyle = ctx.strokeStyle = '#000';
+		for(i = 0; i < nproc.length; i += 4){
+			if(nproc[i] == 1){
+				output(i,1);
+				break;
+			}
+		}
 
 		$("#bt0").click(function(){
 				var achou = 0;
@@ -398,6 +444,7 @@ $(document).ready(function(){
 					if(proc[i] == atu && proc[i+1] == 0){
 						atu = proc[i+2];
 						achou = 1;
+						output(i,0);
 						break;
 					}
 				}
@@ -415,6 +462,7 @@ $(document).ready(function(){
 					if(proc[i] == atu && proc[i+1] == 1){
 						atu = proc[i+2];
 						achou = 1;
+						output(i,0);
 						break;
 					}
 				}
@@ -423,6 +471,7 @@ $(document).ready(function(){
 				if(!achou){
 					alert("Não há destino com a entrada 1 no estado atual");
 				}
+				alert("Relatorios:\nEstados: "+RelaEs+"\nEntradas: "+RelaIn+"\nSaidas: "+RelaOu);
 		});
 
 		//window.location.reload(true);
