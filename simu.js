@@ -1,38 +1,27 @@
 //695min+51+11
-/*
-(472,303)	(714,061)
-(542,131)	(542,131)
-(542,474)	(885,131)
-(714,061)	(472,303)
-(714,545)	(956,303)
-(885,131)	(542,474)
-(885,474)	(885,474)
-(956,303)	(714,545)
-*/
-
 $(document).ready(function(){
 
-	var qest = 8;
 	var bpos = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, 5*Math.PI/4, 6*Math.PI/4, 7*Math.PI/4];
 	var ctx = document.querySelector('canvas').getContext('2d');
-	var tipo = localStorage.getItem("tipoMaquina");
+	var tipo = parseInt(localStorage.getItem("tipoMaquina"));
 	var qtdEst = localStorage.getItem("qtdEst");
 	var vetorTop = localStorage.getItem("vetTop");
-	var dumb = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
-	var dumb2 = [-1,-1,-1,-1,-1,-1,-1,-1,-1];
+	var dumb = [-1,-1,-1,-1,-1,-1,-1,-1,-1], dumb2 = [-1,-1,-1,-1,-1,-1,-1,-1,-1]
 	var est = [0,0,0,0,0,0,0,0];
-	var exl = [0,0,0,0,0,0,0,0];
-	var inl = [0,0,0,0,0,0,0,0];
-	//var proc = [1,1,2,1, 2,0,3,1, 2,1,2,1, 3,1,2,1, 7,0,3,1, 3,0,7,1, 5,0,1,1, 1,0,5,1];
-	//var proc = [1,1,2,0, 2,0,1,1, 2,1,2,0, 1,0,1,1];
-	var proc = [1,0,1,0, 1,0,2,0, 1,0,3,0, 1,0,4,0, 1,0,5,0, 1,0,6,0, 1,0,7,0, 1,0,8,0, 2,0,1,0, 2,0,2,0, 2,0,3,0, 2,0,4,0, 2,0,5,0, 2,0,6,0, 2,0,7,0, 2,0,8,0, 3,0,1,0, 3,0,2,0, 3,0,3,0, 3,0,4,0, 3,0,5,0, 3,0,6,0, 3,0,7,0, 3,0,8,0, 4,0,1,0, 4,0,2,0, 4,0,3,0, 4,0,4,0, 4,0,5,0, 4,0,6,0, 4,0,7,0, 4,0,8,0, 5,0,1,0, 5,0,2,0, 5,0,3,0, 5,0,4,0, 5,0,5,0, 5,0,6,0, 5,0,7,0, 5,0,8,0, 6,0,1,0, 6,0,2,0, 6,0,3,0, 6,0,4,0, 6,0,5,0, 6,0,6,0, 6,0,7,0, 6,0,8,0, 7,0,1,0, 7,0,2,0, 7,0,3,0, 7,0,4,0, 7,0,5,0, 7,0,6,0, 7,0,7,0, 7,0,8,0, 8,0,1,0, 8,0,2,0, 8,0,3,0, 8,0,4,0, 8,0,5,0, 8,0,6,0, 8,0,7,0, 8,0,8,0];
-	//var proc = [1,0,1,1, 2,0,2,1, 3,0,3,1, 4,0,4,1, 5,0,5,1, 6,0,6,1, 7,0,7,1, 8,0,8,1, 1,1,2,1, 2,1,3,1, 3,1,4,1, 4,1,5,1, 5,1,6,1, 6,1,7,1, 7,1,8,1, 8,1,1,1];
-	//var proc = [1,0,1,0, 2,0,2,0, 1,1,2,0, 2,1,1,0];
+	var ze = [0,0,0,0,0,0,0,0,0];
+	var um = [0,0,0,0,0,0,0,0,0];
+	var proc = new Array(Math.ceil(vetorTop.length/2));
+	var cont = 0;
+	for(var a = 0; a < vetorTop.length; a++){
+		if(vetorTop[a] != ","){
+			proc[cont++] = vetorTop[a];
+		}
+	}
+	var qest = parseInt(qtdEst);
 	var nproc = proc.slice(0);
 	var atu;
-	var i;
+	var i, j;
 
-	tipo = 1;
 	h2can = 605 - 0.2*605;
 	ctx.canvas.width = 1427;
 	ctx.canvas.height = 605;
@@ -44,24 +33,27 @@ $(document).ready(function(){
 		window.stop();
 	}
 	for(i = 0; i < nproc.length; i += 4){
+		if(nproc[i+1] == 1){
+			um[nproc[i]]++;
+		}
+		else if(nproc[i+1] == 0){
+			ze[nproc[i]]++;
+		}
 		dumb2[nproc[i]]++;
 		if(dumb2[nproc[i]] > 1){
 			alert("Operação Inválida\nDois caminhos possiveis com a mesma entrada");
 			window.stop();
-			//break;
 		}
 		if(dumb[nproc[i+2]] == -1){
 			dumb[nproc[i+2]] = nproc[i+3];
 		}
 		else{
-			if(dumb[nproc[i+2]] != nproc[i+3]){
+			if(dumb[nproc[i+2]] != nproc[i+3] && tipo){
 				alert("Operação Inválida\nUm estado com duas saidas diferentes em Tipo Moore");
 				window.stop();
-				//break;
 			}
 		}
 	}
-	alert(dumb2);
 
 	if(qest == 3 | qest == 5 | qest == 8){
 		est[0] = randomCircle(ctx,'#a80000', mX(bpos[0]), mY(bpos[0]),40);
@@ -101,6 +93,45 @@ $(document).ready(function(){
 		est[7] = randomCircle(ctx,'#999', mX(bpos[7]), mY(bpos[7]),40);
 	}
 
+	for(i = 1; i < 10; i++){
+		if(dumb2[i] > -1){
+			dumb2[i] = randomCircle(ctx,'#eee', 100, (i-1)*74+36,20);
+			ctx.fillText(""+i, 95, (i-1)*74+41);
+			if(ze[i] == 1){
+				ze[i] = randomCircle(ctx,'#eee', 190, (i-1)*75+17,15);
+				arrow(ctx,dumb2[i],ze[i],10,1,0);
+				ctx.font = "15px Arial";
+				ctx.fillText("0", 130, (i-1)*75+20,15);
+				for(j = 0; j < nproc.length; j +=4){
+					if(nproc[j] == i && nproc[j+1] == 0){
+						if(!tipo){
+							ctx.fillText("/"+nproc[j+3], 140, (i-1)*75+20,15);
+						}
+						ctx.fillText(""+nproc[j+2], 185, (i-1)*75+21,15);
+						break;
+					}
+				}
+				ctx.font = "20px Arial";
+			}
+			if(um[i] == 1){
+				um[i] = randomCircle(ctx,'#eee', 190, (i-1)*75+51,15);
+				arrow(ctx,dumb2[i],um[i],10,1,0);
+				ctx.font = "15px Arial";
+				ctx.fillText("1", 130, (i-1)*75+59,15);
+				for(j = 0; j < nproc.length; j +=4){
+					if(nproc[j] == i && nproc[j+1] == 1){
+						if(!tipo){
+							ctx.fillText("/"+nproc[j+3], 140, (i-1)*75+59,15);
+						}
+						ctx.fillText(""+nproc[j+2], 185, (i-1)*75+56,15);
+						break;
+					}
+				}
+				ctx.font = "20px Arial";
+			}
+		}
+	}
+
 	ctx.fillStyle = ctx.strokeStyle = '#5ba4ba';
 
 	if(qest == 2){
@@ -125,6 +156,58 @@ $(document).ready(function(){
 		write();
 		arrows();
 	}
+	if(qest == 4){
+		for(i = 0; i < proc.length; i += 2){
+			if(proc[i] == 1)
+				proc[i] = 1;
+			else if(proc[i] == 2)
+				proc[i] = 3;
+			else if(proc[i] == 3)
+				proc[i] = 5;
+			else if(proc[i] == 4)
+				proc[i] = 7;
+		}
+		write();
+		arrows();
+	}
+	if(qest == 5){
+		for(i = 0; i < proc.length; i += 2){
+			if(proc[i] == 1)
+				proc[i] = 0;
+			else if(proc[i] == 2)
+				proc[i] = 2;
+			else if(proc[i] == 3)
+				proc[i] = 4;
+			else if(proc[i] == 4)
+				proc[i] = 6;
+			else if(proc[i] == 5)
+				proc[i] = 7;
+		}
+		write();
+		arrows();
+	}
+	if(qest == 6){
+		for(i = 0; i < proc.length; i += 2){
+			if(proc[i] == 1)
+				proc[i] = 1;
+			else if(proc[i] == 2)
+				proc[i] = 2;
+			else if(proc[i] == 3)
+				proc[i] = 3;
+			else if(proc[i] == 4)
+				proc[i] = 5;
+			else if(proc[i] == 5)
+				proc[i] = 6;
+			else if(proc[i] == 6)
+				proc[i] = 7;
+		}
+		write();
+		arrows();
+	}
+	if(qest == 7){
+		write();
+		arrows();
+	}
 	if(qest == 8){
 		for(i = 0; i < proc.length; i += 2){
 			proc[i]--;
@@ -135,6 +218,7 @@ $(document).ready(function(){
 
 	function correct(x,y,x2,y2,f){
 		//alert("("+x+","+y+") ("+x2+","+y2+")");
+		/*
 		if(x < 500){
 			if(y2 < 200){
 				if(x2 < 600){//7 6
@@ -159,8 +243,9 @@ $(document).ready(function(){
 				if(!f){ y -= 5; }
 			}
 		}
-		x += Math.round((Math.random()-.5)*40);
-		y += Math.round((Math.random()-.5)*40);
+		*/
+		x += Math.round((Math.random()-.5)*10);
+		y += Math.round((Math.random()-.5)*10);
 		return {x:x,y:y};
 	}
 
