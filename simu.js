@@ -471,6 +471,9 @@ $(document).ready(function(){
 				if(!achou){
 					alert("Não há destino com a entrada 1 no estado atual");
 				}
+		});
+
+		$("#btR").click(function(){
 				alert("Relatorios:\nEstados: "+RelaEs+"\nEntradas: "+RelaIn+"\nSaidas: "+RelaOu);
 		});
 
