@@ -1,4 +1,4 @@
-# FSMSim
+# FSMSim 🤖
 
 The project consists of elaborating a system that graphically simulates a Finite State Machine described by the user, whether is it Mealy or Moore. It supports up to 8 states and from this it is able to generate the diagram that receives the input desired by the user at a given state.
 In the header it is possible to generate a report with the outputs generated in that FSM following the entries chosen and update the current state also according to the entry.
@@ -13,7 +13,7 @@ To assist the graphical interface,we used canvas that is an element of HTML5 tha
 
 The code consists of the HTML implementation of the form that receives the user information, in addition to the JS code that is responsible for selecting and saving the data entered by users into variables. Finally, as the main part, the project also contains the code responsible for, from the number of states and their future states, generate the circles and arrows, once all the coordinates are defined previously, being only necessary to decide whether to display each information, futhermore, it has the event of the input buttons, which from the current state and the input clicked, traverses a array containing the table with states and future states, and lastly decides which state to transition.
 
-# Limitations
+# Limitations 🚧
 
 The project's goal was achieved being possible to generate the state diagram from the description of a FSM, however, it was necessary to define some limitations in the system, they are:
 
@@ -45,7 +45,7 @@ The formatting used for the table should follow these rules: Each state must be 
 
 Some input exemples can be found at `InputExemples.txt`.
 
-# Developers
+# Developers 👨‍💻
 
 Eduardo Alves Baratela - 10295270
 
