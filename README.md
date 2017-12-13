@@ -29,7 +29,7 @@ They are limited to only one, such measure has been taken since increasing the n
 
 This would cause many arrows to be added, because there'd be the possibility that from given state the transitions take place up to <img src="https://raw.githubusercontent.com/vitorgt/Others/master/Images/e2.png" width="150"> other states
 
-## How to use
+# How to use
 
 Clone or download this [project](https://github.com/vitorgt/FSMSim) then open `trab.html`.
 
@@ -45,4 +45,26 @@ The formatting used for the table should follow these rules: Each state must be 
 
 Some input exemples can be found at `InputExemples.txt`.
 
-## Have fun!
+# Developers
+
+Eduardo Alves Baratela - 10295270
+
+Fabio Fogarin Destro - 10284667
+
+Paulo André de Oliveira Carneiro - 10295304
+
+Vitor Henrique Gratiere Torres - 10284952
+
+# SSC0118
+
+Digital Systems
+
+Institute of Mathematical and Computer Sciences
+
+University of São Paulo
+
+Professor Mauricio Acconcia Dias
+
+2017.2
+
+# Have fun!
