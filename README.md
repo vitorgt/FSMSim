@@ -7,7 +7,7 @@ As well the system informs, by each transition, the previous state, the ongoing 
 
 # Preface
 
-The project was developed using HTML technologies to structure the page that receives the data from the machine described by the user, CSS to stylize the page that reads the data and JavaScript (along with the jQuery library) to manipulate the data described by the user and generate the state machine and perform click events.
+The project was developed using HTML technologies to structure the page that receives the data from the machine described by the user, CSS to stylize the page that reads the data and JavaScript (along with the jQuery library) to manipulate it, generate the state machine and perform click events.
 
 To assist the graphical interface,we used canvas that is an element of HTML5 that can be manipulated through JavaScript, in addition, we use a [graphic library](http://phrogz.net/tmp/canvas_shape_edge_arrows.html) that allows the generation of circles from positions (x, y) and also allows the creation of arrows, to represent the transitions.
 
@@ -37,9 +37,14 @@ The use of the system basically consists of the way in which the user must enter
 
 * Type of Machine;
 * Amount of States;
-* Table with current state, input, future state, outout in each line.
+* Table with current state, input, future state and output in each line.
 
-The formatting used for the table should follow these rules: Each state must be informed with the number that represents the state, **in decimal format**, the first state being represented by the number 1 and the last state by the number 8. Therefore, each line of the table must contain the number that represents the current state, followed by a space and the bit zero or one to represent the input that will lead to the next state, which must be typed next and finally, if it's a Mealy machine, the output bit that occurs in the transition, or if it's a Moore machine, the output bit of that state.
+The formatting used for the table should follow these rules: Each state must be informed with the number that represents the state, **in decimal format**, the first state being represented by the number 1 and the last state by the number 8. Therefore, each line of the table must contain the number that represents the current state, followed by a space and the bit zero or one to represent the input that will lead to the next state, which must be typed next and finally:
+
+* if it's a Mealy machine, the output bit that occurs in the transition;
+* or if it's a Moore machine, the output bit of that state.
+
+**Note that for Moore machines, outputs of equal future states must be equal.**
 
 [Demonstration](https://www.youtube.com/watch?v=RYh74JX02-o)
 
