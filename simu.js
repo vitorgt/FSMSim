@@ -20,10 +20,9 @@ $(document).ready(function(){
 		var qest = parseInt(qtdEst);
 		var nproc = proc.slice(0);
 		var atu;
-		var RelaEs = new Array(2000);
-		var RelaIn = new Array(2000);
-		var RelaOu = new Array(2000);
-		var cEs = 0, cIn = 0, cOu = 0;
+		var RelaEs = [];
+		var RelaIn = [];
+		var RelaOu = [];
 		var i, j;
 
 		h2can = 605 - 0.2*605;
@@ -389,19 +388,19 @@ $(document).ready(function(){
 				ctx.fillText("Estado anterior: "+nproc[i],1150,100);
 				ctx.fillText("Estado atual: "+nproc[i+2],1150,130);
 				ctx.fillText("Saida: "+nproc[i+3],1150,160);
-				RelaEs[cEs++] = nproc[i+2];
-				RelaIn[cIn++] = nproc[i+1];
-				RelaOu[cOu++] = nproc[i+3];
+				RelaEs.push(nproc[i+2]);
+				RelaIn.push(nproc[i+1]);
+				RelaOu.push(nproc[i+3]);
 			}
 			else{
 				ctx.fillText("Estado anterior: ",1150,100);
 				ctx.fillText("Estado atual: 1",1150,130);
-				RelaEs[cEs++] = 1;
+				RelaEs.push(1);
 				if(tipo == 1){
 					for(i = 0; i < nproc.length; i += 4){
 						if(nproc[i+2] == 1){
 							ctx.fillText("Saida: "+nproc[i+3],1150,160);
-							RelaOu[cOu++] = nproc[i+3];
+							RelaOu.push(nproc[i+3]);
 							break;
 						}
 					}
@@ -474,7 +473,7 @@ $(document).ready(function(){
 		});
 
 		$("#btR").click(function(){
-				alert("Relatorios:\nEstados: "+RelaEs+"\nEntradas: "+RelaIn+"\nSaidas: "+RelaOu);
+				alert("Relatorio:\nEstados: "+RelaEs+"\nEntradas: "+RelaIn+"\nSaidas: "+RelaOu);
 		});
 
 		//window.location.reload(true);
