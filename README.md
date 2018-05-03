@@ -1,4 +1,4 @@
-# FSMSim 🤖
+# [FSMSim 🤖](https://vitorgt.github.io/FSMSim/trab.html)
 
 The project consists of elaborating a system that graphically simulates a Finite State Machine described by the user, whether is it Mealy or Moore. It supports up to 8 states and from this it is able to generate the diagram that receives the input desired by the user at a given state.
 In the header it is possible to generate a report with the outputs generated in that FSM following the entries chosen and update the current state also according to the entry.
@@ -31,7 +31,7 @@ This would cause many arrows to be added, because there'd be the possibility tha
 
 # How to use
 
-Clone or download this [project](https://github.com/vitorgt/FSMSim) then open `trab.html`.
+[Open this link](https://vitorgt.github.io/FSMSim/trab.html) or clone or download this [project](https://github.com/vitorgt/FSMSim) then open `trab.html`.
 
 The use of the system basically consists of the way in which the user must enter the information related to the desired state machine diagram, it is necessary to fill in the following data:
 
